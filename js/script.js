@@ -18,7 +18,7 @@ const playAgainButton = document.querySelector(".play-again");
 let word = "Magnolia";
 // create another global variable called guessedLetters with an empty array. This array will contain all the letters the player guesses.
 let guessedLetters = [];
-let remainingGuesses = 8;
+let remainingGuesses = 5;
 
 const getWord = async function () {
     const res = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
@@ -42,8 +42,6 @@ const placeholderSymbol = function(word){
     }
     wordInProgress.innerText = placeholderLetters.join("");
 };
-// Call the function and pass it the word variable as the argument.
-//placeholderSymbol(word);
 
 // Add an event listener for when a player clicks the Guess button. In the callback function, add a parameter for the event: e.
 button.addEventListener("click", function(e) {
@@ -137,14 +135,15 @@ const updatedGuessedLetters = function(guessedLetters){
 //Create and name a new function that will accept the guess input as a parameter. In the code, place this function before the function that checks if the player won.
 const countGuessesRemaining = function(guess){
     const upperCaseWord = word.toUpperCase();
-    if(!upperCaseWord.includes(guess)){
+    if (!upperCaseWord.includes(guess)) {
         message.innerText = `Try again. ${guess} is not in the word.`;
         remainingGuesses -= 1;
     } else {
         message.innerText = `Yes! ${guess} is in the word!`;
     }
-    if(remainingGuesses === 0){
-        message.innerText = `Game over! The correct word is ${word}`;
+
+    if (remainingGuesses === 0) {
+        message.innerText = `Game over! The correct word is ${word}.`;
     } else if (remainingGuesses === 1){
         remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
     } else {
@@ -164,7 +163,7 @@ const checkPlayerWin = function(){
 };
 
 // create a function to hide elements, like the Guess button, when the game ends. You’ll also use the function to show the Play Again button.
-const startOver = function(){
+const startOver = function () {
     button.classList.add("hide");
     remainingGuessesInput.classList.add("hide");
     lettersGuessed.classList.add("hide");
@@ -174,16 +173,15 @@ const startOver = function(){
 playAgainButton.addEventListener("click", function () {
     message.classList.remove("win");
     guessedLetters = [];
-    remainingGuesses = 8;
+    remainingGuesses = 5;
     remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
-    
+    lettersGuessed.innerHTML = "";
+    message.innerText = "";
+
     button.classList.remove("hide");
     remainingGuessesInput.classList.remove("hide");
     lettersGuessed.classList.remove("hide");
     playAgainButton.classList.add("hide");
-    
-    lettersGuessed.innerHTML = "";
-    message.innerText = "";
     
     getWord();
 });
