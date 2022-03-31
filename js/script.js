@@ -17,7 +17,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 let word = "Magnolia";
 // create another global variable called guessedLetters with an empty array. This array will contain all the letters the player guesses.
-const guessedLetters = [];
+let guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function () {
@@ -43,7 +43,7 @@ const placeholderSymbol = function(word){
     wordInProgress.innerText = placeholderLetters.join("");
 };
 // Call the function and pass it the word variable as the argument.
-placeholderSymbol(word);
+//placeholderSymbol(word);
 
 // Add an event listener for when a player clicks the Guess button. In the callback function, add a parameter for the event: e.
 button.addEventListener("click", function(e) {
@@ -62,7 +62,7 @@ button.addEventListener("click", function(e) {
     };
     //empty the value of the input. You should see the letter you enter into the input field in the console when the Guess button is clicked. 
     letter.value = "";
-    console.log(playerGuess);
+    //console.log(playerGuess);
 });
 
 // Create and name a function that accepts the input value as a parameter. This function’s purpose is to validate the player’s input.
@@ -131,8 +131,6 @@ const updatedGuessedLetters = function(guessedLetters){
         }
     }
     wordInProgress.innerText = updatedLetters.join("");
-    const guessesRemainingCount = function(guess){
-    };
     checkPlayerWin();
 };
 
@@ -160,5 +158,32 @@ const checkPlayerWin = function(){
     if (word.toUpperCase() === wordInProgress.innerText){
         message.classList.add("win");
         message.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!</p>`;
+
+        startOver();
     }
 };
+
+// create a function to hide elements, like the Guess button, when the game ends. You’ll also use the function to show the Play Again button.
+const startOver = function(){
+    button.classList.add("hide");
+    remainingGuessesInput.classList.add("hide");
+    lettersGuessed.classList.add("hide");
+    playAgainButton.classList.remove("hide");
+};
+// write a click event for the Play Again button to display a new word and restart the guesses back to 8
+playAgainButton.addEventListener("click", function () {
+    message.classList.remove("win");
+    guessedLetters = [];
+    remainingGuesses = 8;
+    remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
+    
+    button.classList.remove("hide");
+    remainingGuessesInput.classList.remove("hide");
+    lettersGuessed.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+    
+    lettersGuessed.innerHTML = "";
+    message.innerText = "";
+    
+    getWord();
+});
