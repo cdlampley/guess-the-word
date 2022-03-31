@@ -144,6 +144,7 @@ const countGuessesRemaining = function(guess){
 
     if (remainingGuesses === 0) {
         message.innerText = `Game over! The correct word is ${word}.`;
+        startOver();
     } else if (remainingGuesses === 1){
         remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
     } else {
