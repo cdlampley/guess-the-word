@@ -4,4 +4,4 @@ A guess the word game created with JavaScript. Players are able to enter one wor
 
 Skills: JavaScript, DOM Manipulation, CSS
 
-Tools: Github
+Tools: GitHub, GitHub Pages
